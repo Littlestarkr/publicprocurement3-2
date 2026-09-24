@@ -933,22 +933,20 @@ function gradeExam() {
     document.getElementById('submit-btn').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // [데이터 수집 로직] 구글 스프레드시트로 전송 (이전 대화 기반 연동)
-    // 주의: 아래 'YOUR_WEB_APP_URL' 부분에 발급받으신 Apps Script 웹 앱 URL을 반드시 붙여넣으셔야 작동합니다.
+    // [데이터 수집 로직] 구글 스프레드시트로 전송
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxuWUryuH8Q1b-kiGQIMJL-Fe-k2acjhcXxmCmF0aQoB0jgbuDV729nJvaYOHjBiOr3/exec"; 
     
-    if (webAppUrl !== "https://script.google.com/macros/s/AKfycbxuWUryuH8Q1b-kiGQIMJL-Fe-k2acjhcXxmCmF0aQoB0jgbuDV729nJvaYOHjBiOr3/exec") {
-        fetch(webAppUrl, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.status === "success") console.log("응시 결과가 스프레드시트에 성공적으로 저장되었습니다.");
-        })
-        .catch(error => console.error("데이터 전송 오류:", error));
-    }
+    // 조건문을 삭제하고 무조건 fetch API를 실행하도록 수정했습니다.
+    fetch(webAppUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === "success") console.log("응시 결과가 스프레드시트에 성공적으로 저장되었습니다.");
+    })
+    .catch(error => console.error("데이터 전송 오류:", error));
 }
 
 window.onload = renderQuiz;
